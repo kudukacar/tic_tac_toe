@@ -1,21 +1,13 @@
 # TicTacToe
-
-**TODO: Add description**
-
-## Installation
-
-If [available in Hex](https://hex.pm/docs/publish), the package can be installed
-by adding `tic_tac_toe` to your list of dependencies in `mix.exs`:
-
-```elixir
-def deps do
-  [
-    {:tic_tac_toe, "~> 0.1.0"}
-  ]
-end
-```
-
-Documentation can be generated with [ExDoc](https://github.com/elixir-lang/ex_doc)
-and published on [HexDocs](https://hexdocs.pm). Once published, the docs can
-be found at [https://hexdocs.pm/tic_tac_toe](https://hexdocs.pm/tic_tac_toe).
+Command line Tic-Tac-Toe game
+ 
+## Play the game
+1. [Install Elixir](https://elixir-lang.org/install.html)
+2. Clone repository by typing the following in the terminal: git clone https://github.com/kudukacar/tic_tac_toe.git
+3. In your terminal, navigate to the project folder
+4. Type the following in the terminal: mix deps.get
+5. Type the following in the terminal to play the game: mix tic_tac_toe
+ 
+## Run tests
+1. Type the following in the terminal to run the tests: mix test
 

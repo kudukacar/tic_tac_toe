@@ -1,18 +1,6 @@
 defmodule TicTacToe do
-  @moduledoc """
-  Documentation for `TicTacToe`.
-  """
-
-  @doc """
-  Hello world.
-
-  ## Examples
-
-      iex> TicTacToe.hello()
-      :world
-
-  """
-  def hello do
-    :world
+  def run do
+    IO.puts("Welcome to Tic-Tac-Toe")
+    nil
   end
 end
