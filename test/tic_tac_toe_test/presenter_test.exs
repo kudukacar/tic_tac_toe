@@ -2,20 +2,20 @@ defmodule TicTacToe.PresenterTest do
   use ExUnit.Case
   alias TicTacToe.Presenter
 
-  defmodule BoardWithOnlyNil do
-    def get(_grid, _position) do
-      nil
+  defmodule BoardWithThreeX do
+    def get(_grid, position) do
+      if Enum.member?([1, 2, 3], position), do: "X"
     end
   end
 
   test "formats the board" do
     grid = []
     spaces = "   "
-    board = BoardWithOnlyNil
+    board = BoardWithThreeX
 
     expected_grid = """
 
-    #{spaces}|#{spaces}|#{spaces}
+     X | X | X 
     ---+---+---
     #{spaces}|#{spaces}|#{spaces}
     ---+---+---
