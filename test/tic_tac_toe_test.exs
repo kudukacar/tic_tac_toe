@@ -1,16 +1,13 @@
 defmodule TicTacToeTest do
   use ExUnit.Case
 
-  defmodule FakePresenter do
+  defmodule HyphenPresenter do
     def present(board) do
-      board_representation =
-        Enum.map(board, fn cell_value -> cell_value || "-" end)
-
-      Enum.join(board_representation)
+      board |> Enum.map(fn cell_value -> cell_value || "-" end) |> Enum.join()
     end
   end
 
-  defmodule FakeDisplay do
+  defmodule DisplayWithOutput do
     def output(message) do
       message
     end
@@ -22,8 +19,8 @@ defmodule TicTacToeTest do
 
     assert TicTacToe.run(
              board: board,
-             display: FakeDisplay,
-             presenter: FakePresenter
+             display: DisplayWithOutput,
+             presenter: HyphenPresenter
            ) == expected_grid
   end
 end
