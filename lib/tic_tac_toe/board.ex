@@ -1,9 +1,9 @@
-defmodule TicTacToe.Board do
-  def empty_grid do
-    List.duplicate(nil, 9)
-  end
+defprotocol TicTacToe.Board do
+  def get(board, position)
+end
 
-  def get(grid, position) do
-    Enum.at(grid, position - 1)
+defimpl TicTacToe.Board, for: List do
+  def get(board, position) do
+    Enum.at(board, position - 1)
   end
 end

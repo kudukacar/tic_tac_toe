@@ -1,10 +1,12 @@
 defmodule TicTacToe do
-  def run(board, display, presenter) do
-    grid = board.empty_grid
-    show_grid(grid, board, display, presenter)
-  end
+  alias TicTacToe.Display
+  alias TicTacToe.Presenter
 
-  def show_grid(grid, board, display, presenter) do
-    display.output(presenter.present(grid, board))
+  def run(opts \\ []) do
+    board = Keyword.get(opts, :board, List.duplicate(nil, 9))
+    display = Keyword.get(opts, :display, Display)
+    presenter = Keyword.get(opts, :presenter, Presenter)
+
+    board |> presenter.present() |> display.output()
   end
 end

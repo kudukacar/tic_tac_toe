@@ -1,19 +1,21 @@
 defmodule TicTacToe.Presenter do
-  def present(grid, board) do
+  alias TicTacToe.Board
+
+  def present(board) do
     space = " "
 
     """
 
-     #{board.get(grid, 1) || space} | #{board.get(grid, 2) || space} | #{
-      board.get(grid, 3) || space
+     #{Board.get(board, 1) || space} | #{Board.get(board, 2) || space} | #{
+      Board.get(board, 3) || space
     } 
     ---+---+---
-     #{board.get(grid, 4) || space} | #{board.get(grid, 5) || space} | #{
-      board.get(grid, 6) || space
+     #{Board.get(board, 4) || space} | #{Board.get(board, 5) || space} | #{
+      Board.get(board, 6) || space
     } 
     ---+---+---
-     #{board.get(grid, 7) || space} | #{board.get(grid, 8) || space} | #{
-      board.get(grid, 9) || space
+     #{Board.get(board, 7) || space} | #{Board.get(board, 8) || space} | #{
+      Board.get(board, 9) || space
     } 
 
     """
