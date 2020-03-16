@@ -21,4 +21,8 @@ defmodule TicTacToe.DisplayTest do
              "Welcome to Tic-Tac-Toe"
            ]
   end
+
+  test "gets the user's trimmed entry" do
+    assert Display.input("Please enter a position", gets: &fake_io/1) == "Please enter a position\n"
+  end
 end

@@ -10,6 +10,9 @@ defmodule TicTacToe.PresenterTest do
       def get(_board, position) do
         if Enum.member?([1, 2, 3], position), do: "X"
       end
+
+      def place_token(_board, _position, _token) do
+      end
     end
   end
 

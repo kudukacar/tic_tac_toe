@@ -6,4 +6,10 @@ defmodule TicTacToe.Display do
     puts.(message)
     [message | messages]
   end
+
+  def input(message, opts \\ []) do
+    gets = Keyword.get(opts, :gets, &IO.gets/1)
+    
+    gets.(message <> "\n")
+  end
 end
