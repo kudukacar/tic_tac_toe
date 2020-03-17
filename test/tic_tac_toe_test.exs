@@ -1,5 +1,6 @@
 defmodule TicTacToeTest do
   use ExUnit.Case
+  alias TicTacToe.Player
 
   defmodule HyphenPresenter do
     def present(board) do
@@ -7,20 +8,35 @@ defmodule TicTacToeTest do
     end
   end
 
-  defmodule DisplayWithOutput do
-    def output(message) do
-      message
+  defmodule DisplayWithIO do
+    def output(message, messages \\ []) do
+      messages ++ [message]
+    end
+
+    def input(_message) do
+      "1"
     end
   end
 
-  test "shows the board" do
-    expected_grid = "---"
+  defmodule PlayerWithOne do
+    defstruct token: ""
+
+    defimpl Player do
+      def selection(%PlayerWithOne{}, _opts) do
+        1
+      end
+    end
+  end
+
+  test "shows every state of the board" do
+    expected_grid = ["---", "X--"]
     board = [nil, nil, nil]
 
     assert TicTacToe.run(
              board: board,
-             display: DisplayWithOutput,
-             presenter: HyphenPresenter
+             display: DisplayWithIO,
+             presenter: HyphenPresenter,
+             player: %PlayerWithOne{token: "X"}
            ) == expected_grid
   end
 end

@@ -2,8 +2,14 @@ defmodule TicTacToe.DisplayTest do
   use ExUnit.Case
   alias TicTacToe.Display
 
-  def fake_io(message) do
-    message
+  defmodule FakeIO do
+    def puts(message) do
+      message
+    end
+
+    def gets(message) do
+      message |> String.trim()
+    end
   end
 
   test "prints a message" do
@@ -17,12 +23,13 @@ defmodule TicTacToe.DisplayTest do
   end
 
   test "return messages" do
-    assert Display.output("Welcome to Tic-Tac-Toe", puts: &fake_io/1) == [
+    assert Display.output("Welcome to Tic-Tac-Toe", puts: &FakeIO.puts/1) == [
              "Welcome to Tic-Tac-Toe"
            ]
   end
 
   test "gets the user's trimmed entry" do
-    assert Display.input("Please enter a position", gets: &fake_io/1) == "Please enter a position\n"
+    assert Display.input("Please enter a position\n", gets: &FakeIO.gets/1) ==
+             "Please enter a position"
   end
 end
