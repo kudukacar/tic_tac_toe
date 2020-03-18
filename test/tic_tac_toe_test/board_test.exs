@@ -14,4 +14,10 @@ defmodule TicTacToe.BoardTest do
 
     assert Board.place_token(board, 1, token) == [token, nil, nil]
   end
+
+  test "returns all available positions" do
+    board = ["X", nil, nil]
+
+    assert Board.available_positions(board) == [2, 3]
+  end
 end

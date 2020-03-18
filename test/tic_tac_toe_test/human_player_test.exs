@@ -11,7 +11,7 @@ defmodule TicTacToe.HumanPlayerTest do
   end
 
   defmodule ValidatorWithOneValid do
-    def error(position) do
+    def error(position, _board) do
       unless position == 1 do
         "Invalid entry"
       end
@@ -19,33 +19,43 @@ defmodule TicTacToe.HumanPlayerTest do
   end
 
   defmodule DisplayWithInputs do
-    defstruct state: []
+    defstruct [:input, :moves]
 
     defimpl Display do
       def output(_console, _message) do
       end
 
-      def input(%DisplayWithInputs{state: state}, _message) do
-        List.first(state)
+      def input(%DisplayWithInputs{moves: moves} = display, _message) do
+        %{display | input: List.first(moves), moves: List.delete_at(moves, 0)}
       end
     end
   end
 
   test "with a valid entry returns the player's selection" do
-    assert Player.selection(%HumanPlayer{
-             token: "X",
-             display: %DisplayWithInputs{state: ["1"]},
-             parser: ParserWithOne,
-             validator: ValidatorWithOneValid
-           }) == 1
+    board = []
+
+    assert Player.selection(
+             %HumanPlayer{
+               token: "X",
+               display: %DisplayWithInputs{moves: ["1"]},
+               parser: ParserWithOne,
+               validator: ValidatorWithOneValid
+             },
+             board
+           ).selection == 1
   end
 
   test "with an invalid entry prompts the user until a valid entry" do
-    assert Player.selection(%HumanPlayer{
-             token: "X",
-             display: %DisplayWithInputs{state: ["0", "10", "1"]},
-             parser: ParserWithOne,
-             validator: ValidatorWithOneValid
-           }) == 1
+    board = []
+
+    assert Player.selection(
+             %HumanPlayer{
+               token: "X",
+               display: %DisplayWithInputs{moves: ["0", "10", "1"]},
+               parser: ParserWithOne,
+               validator: ValidatorWithOneValid
+             },
+             board
+           ).selection == 1
   end
 end

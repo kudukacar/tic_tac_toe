@@ -7,30 +7,30 @@ defmodule TicTacToe.HumanPlayer do
   alias TicTacToe.Parser
 
   defstruct token: [:token],
+            selection: [:selection],
             display: %Console{},
             parser: Parser,
             validator: PositionValidator
 
   defimpl Player do
-    def selection(%HumanPlayer{
-          token: token,
-          display: display,
-          parser: parser,
-          validator: validator
-        }) do
-      input = Display.input(display, message(token)) |> parser.to_integer()
+    def selection(
+          %HumanPlayer{
+            token: token,
+            display: display,
+            parser: parser,
+            validator: validator
+          } = player,
+          board
+        ) do
+      display = Display.input(display, message(token))
+      input = parser.to_integer(display.input)
 
-      unless error = validator.error(input) do
-        input
+      unless error = validator.error(input, board) do
+        %{player | selection: input, display: display}
       else
-        Display.output(%{state: state} = display, error)
+        Display.output(display, error)
 
-        selection(%HumanPlayer{
-          token: token,
-          display: %{display | state: List.delete_at(state, 0)},
-          parser: parser,
-          validator: validator
-        })
+        selection(%{player | display: display}, board)
       end
     end
 

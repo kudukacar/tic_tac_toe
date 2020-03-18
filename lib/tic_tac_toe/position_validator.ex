@@ -1,9 +1,16 @@
 defmodule TicTacToe.PositionValidator do
-  def error(position) do
-    range = 1..9
+  alias TicTacToe.Board
 
-    unless Enum.member?(range, position) do
-      "Invalid entry."
+  def error(position, board) do
+    cond do
+      Enum.member?(1..9, position) == false ->
+        "Invalid entry."
+
+      Board.available_positions(board) |> Enum.member?(position) == false ->
+        "Selection taken."
+
+      true ->
+        nil
     end
   end
 end

@@ -13,6 +13,9 @@ defmodule TicTacToe.PresenterTest do
 
       def place_token(_board, _position, _token) do
       end
+
+      def available_positions(_board) do
+      end
     end
   end
 

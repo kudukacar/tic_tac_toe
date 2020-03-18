@@ -27,7 +27,7 @@ defmodule TicTacToe.ConsoleTest do
     assert Display.output(
              %Console{puts: &FakeIO.puts/1},
              "Welcome to Tic-Tac-Toe"
-           ) == [
+           ).outputs == [
              "Welcome to Tic-Tac-Toe"
            ]
   end
@@ -36,7 +36,7 @@ defmodule TicTacToe.ConsoleTest do
     assert Display.input(
              %Console{gets: &FakeIO.gets/1},
              "Please enter a position\n"
-           ) ==
+           ).input ==
              "Please enter a position"
   end
 end
