@@ -1,6 +1,7 @@
-defmodule TicTacToe.DisplayTest do
+defmodule TicTacToe.ConsoleTest do
   use ExUnit.Case
   alias TicTacToe.Display
+  alias TicTacToe.Console
 
   defmodule FakeIO do
     def puts(message) do
@@ -17,19 +18,25 @@ defmodule TicTacToe.DisplayTest do
       send(self(), {:i_was_called_with, message})
     end
 
-    Display.output("Welcome to Tic-Tac-Toe", puts: callback)
+    Display.output(%Console{puts: callback}, "Welcome to Tic-Tac-Toe")
 
     assert_received({:i_was_called_with, "Welcome to Tic-Tac-Toe"})
   end
 
   test "return messages" do
-    assert Display.output("Welcome to Tic-Tac-Toe", puts: &FakeIO.puts/1) == [
+    assert Display.output(
+             %Console{puts: &FakeIO.puts/1},
+             "Welcome to Tic-Tac-Toe"
+           ) == [
              "Welcome to Tic-Tac-Toe"
            ]
   end
 
   test "gets the user's trimmed entry" do
-    assert Display.input("Please enter a position\n", gets: &FakeIO.gets/1) ==
+    assert Display.input(
+             %Console{gets: &FakeIO.gets/1},
+             "Please enter a position\n"
+           ) ==
              "Please enter a position"
   end
 end
