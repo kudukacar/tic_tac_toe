@@ -21,7 +21,9 @@ defmodule TicTacToe do
     %{state | display: Display.output(display, formatted_board)}
   end
 
-  defp play_turn(%{players: [first_player, second_player], board: board} = state) do
+  defp play_turn(
+         %{players: [first_player, second_player], board: board} = state
+       ) do
     first_player = Player.selection(first_player, board)
     board = Board.place_token(board, first_player.selection, first_player.token)
     %{state | board: board, players: [second_player, first_player]}
