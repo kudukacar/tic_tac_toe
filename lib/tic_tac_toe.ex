@@ -10,7 +10,6 @@ defmodule TicTacToe do
     |> show_board()
     |> play_turn()
     |> show_board()
-    |> Map.get(:display)
   end
 
   defp show_board(

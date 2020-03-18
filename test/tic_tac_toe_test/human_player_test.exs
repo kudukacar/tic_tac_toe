@@ -25,8 +25,8 @@ defmodule TicTacToe.HumanPlayerTest do
       def output(_console, _message) do
       end
 
-      def input(%DisplayWithInputs{moves: moves} = display, _message) do
-        %{display | input: List.first(moves), moves: List.delete_at(moves, 0)}
+      def input(%DisplayWithInputs{moves: [input | moves]} = display, _message) do
+        %{display | input: input, moves: moves}
       end
     end
   end

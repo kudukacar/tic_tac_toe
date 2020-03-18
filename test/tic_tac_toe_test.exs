@@ -44,6 +44,6 @@ defmodule TicTacToeTest do
                %PlayerWithOne{token: "X", selection: 1},
                %PlayerWithOne{token: "O", selection: 2}
              ]
-           }).outputs == expected_grid
+           }).display.outputs == expected_grid
   end
 end
