@@ -7,4 +7,11 @@ defmodule TicTacToe.BoardTest do
 
     assert Board.get(board, 1) == 1
   end
+
+  test "places the token at the position on the board" do
+    board = [nil, nil, nil]
+    token = "X"
+
+    assert Board.place_token(board, 1, token) == [token, nil, nil]
+  end
 end
