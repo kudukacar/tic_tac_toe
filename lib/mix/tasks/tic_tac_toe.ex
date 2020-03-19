@@ -3,10 +3,11 @@ defmodule Mix.Tasks.TicTacToe do
   alias TicTacToe.Console
   alias TicTacToe.Presenter
   alias TicTacToe.HumanPlayer
+  alias TicTacToe.Board
 
   def run(_) do
     TicTacToe.run(%{
-      board: List.duplicate(nil, 9),
+      board: %Board{board: List.duplicate(nil, 9)},
       display: %Console{},
       presenter: Presenter,
       players: [%HumanPlayer{token: "X"}, %HumanPlayer{token: "O"}]
