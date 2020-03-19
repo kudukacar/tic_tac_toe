@@ -1,3 +1,3 @@
 defprotocol TicTacToe.Player do
-  def selection(player)
+  def selection(player, board)
 end

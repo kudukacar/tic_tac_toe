@@ -1,28 +1,30 @@
 defmodule TicTacToe do
   alias TicTacToe.Display
-  alias TicTacToe.Console
-  alias TicTacToe.Presenter
   alias TicTacToe.Player
-  alias TicTacToe.HumanPlayer
   alias TicTacToe.Board
 
-  def run(opts \\ []) do
-    board = Keyword.get(opts, :board, List.duplicate(nil, 9))
-    display = Keyword.get(opts, :display, %Console{})
-    presenter = Keyword.get(opts, :presenter, Presenter)
-    player = Keyword.get(opts, :player, %HumanPlayer{token: "X"})
-
-    new_display = %{display | state: show_board(board, presenter, display)}
-    play_turn(player, board) |> show_board(presenter, new_display)
+  def run(state) do
+    state
+    |> show_board()
+    |> play_turn()
+    |> show_board()
+    |> play_turn()
+    |> show_board()
   end
 
-  defp show_board(board, presenter, display) do
+  defp show_board(
+         %{board: board, presenter: presenter, display: display} = state
+       ) do
     formatted_board = board |> presenter.present()
-    Display.output(display, formatted_board)
+
+    %{state | display: Display.output(display, formatted_board)}
   end
 
-  defp play_turn(player, board) do
-    selection = Player.selection(player)
-    Board.place_token(board, selection, player.token)
+  defp play_turn(
+         %{players: [first_player, second_player], board: board} = state
+       ) do
+    first_player = Player.selection(first_player, board)
+    board = Board.place_token(board, first_player.selection, first_player.token)
+    %{state | board: board, players: [second_player, first_player]}
   end
 end

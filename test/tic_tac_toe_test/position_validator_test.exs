@@ -3,10 +3,17 @@ defmodule TicTacToe.PositionValidatorTest do
   alias TicTacToe.PositionValidator
 
   test "returns an error if the position is not between 1 and 9" do
-    assert PositionValidator.error(0) == "Invalid entry."
+    board = ["X", nil]
+    assert PositionValidator.error(0, board) == "Invalid entry."
   end
 
-  test "returns nil if the position is between 1 and 9" do
-    assert PositionValidator.error(1) == nil
+  test "returns an error if the position is not available" do
+    board = ["X", nil]
+    assert PositionValidator.error(1, board) == "Selection taken."
+  end
+
+  test "returns nil if the position is valid and available" do
+    board = ["X", nil]
+    assert PositionValidator.error(2, board) == nil
   end
 end

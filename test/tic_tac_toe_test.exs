@@ -10,38 +10,40 @@ defmodule TicTacToeTest do
   end
 
   defmodule DisplayWithIO do
-    defstruct state: []
+    defstruct outputs: []
 
     defimpl Display do
-      def output(%DisplayWithIO{state: state}, message) do
-        state ++ [message]
+      def output(%DisplayWithIO{outputs: outputs} = display, message) do
+        %{display | outputs: outputs ++ [message]}
       end
 
       def input(_display, _message) do
-        "1"
       end
     end
   end
 
   defmodule PlayerWithOne do
-    defstruct token: ""
+    defstruct [:token, :selection]
 
     defimpl Player do
-      def selection(%PlayerWithOne{}) do
-        1
+      def selection(%PlayerWithOne{} = player, _board) do
+        player
       end
     end
   end
 
   test "shows every state of the board" do
-    expected_grid = ["---", "X--"]
+    expected_grid = ["---", "X--", "XO-"]
     board = [nil, nil, nil]
 
-    assert TicTacToe.run(
+    assert TicTacToe.run(%{
              board: board,
              display: %DisplayWithIO{},
              presenter: HyphenPresenter,
-             player: %PlayerWithOne{token: "X"}
-           ) == expected_grid
+             players: [
+               %PlayerWithOne{token: "X", selection: 1},
+               %PlayerWithOne{token: "O", selection: 2}
+             ]
+           }).display.outputs == expected_grid
   end
 end
