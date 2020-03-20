@@ -7,9 +7,8 @@ defmodule TicTacToe.PositionValidatorTest do
     defstruct [:position_value]
 
     defimpl BoardInspect do
-      def get(board, position) do
-        position_value = if position == 2, do: nil, else: "X"
-        %{board | position_value: position_value}
+      def get(_board, position) do
+        if position != 2, do: "X"
       end
     end
   end

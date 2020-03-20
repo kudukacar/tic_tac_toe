@@ -4,12 +4,11 @@ defmodule TicTacToe.PresenterTest do
   alias TicTacToe.BoardInspect
 
   defmodule BoardWithThreeX do
-    defstruct [:position_value]
+    defstruct []
 
     defimpl BoardInspect do
-      def get(board, position) do
-        position_value = if Enum.member?([1, 2, 3], position), do: "X"
-        %{board | position_value: position_value}
+      def get(_board, position) do
+        if Enum.member?([1, 2, 3], position), do: "X"
       end
     end
   end

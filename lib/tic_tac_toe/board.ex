@@ -1,11 +1,11 @@
 defmodule TicTacToe.Board do
   alias TicTacToe.Board
 
-  defstruct [:board_state, :position_value, game_over: false]
+  defstruct [:board_state, game_over: false]
 
   defimpl TicTacToe.BoardInspect do
-    def get(%Board{board_state: board_state} = board, position) do
-      %{board | position_value: Enum.at(board_state, position - 1)}
+    def get(%Board{board_state: board_state}, position) do
+      Enum.at(board_state, position - 1)
     end
   end
 

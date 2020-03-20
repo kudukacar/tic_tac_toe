@@ -5,8 +5,7 @@ defmodule TicTacToe.BoardTest do
   alias TicTacToe.BoardUpdate
 
   test "gets the board's value at the given position" do
-    assert BoardInspect.get(%Board{board_state: [1, 2, 3]}, 1).position_value ==
-             1
+    assert BoardInspect.get(%Board{board_state: [1, 2, 3]}, 1) == 1
   end
 
   test "places the token at the position on the board" do
