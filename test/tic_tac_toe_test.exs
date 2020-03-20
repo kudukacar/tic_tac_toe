@@ -3,11 +3,12 @@ defmodule TicTacToeTest do
   alias TicTacToe.Player
   alias TicTacToe.Display
   alias TicTacToe.BoardUpdate
-  alias TicTacToe.BoardOutcome
 
   defmodule HyphenPresenter do
-    def present(%{board: board}) do
-      board |> Enum.map(fn cell_value -> cell_value || "-" end) |> Enum.join()
+    def present(%{board_state: board_state}) do
+      board_state
+      |> Enum.map(fn cell_value -> cell_value || "-" end)
+      |> Enum.join()
     end
   end
 
@@ -24,18 +25,21 @@ defmodule TicTacToeTest do
     end
   end
 
-  defmodule PlayerWithOne do
+  defmodule PlayerWithMoves do
     defstruct [:token, :selection, :moves]
 
     defimpl Player do
-      def selection(%PlayerWithOne{moves: [selection | moves]} = player, _board) do
+      def selection(
+            %PlayerWithMoves{moves: [selection | moves]} = player,
+            _board
+          ) do
         %{player | moves: moves, selection: selection}
       end
     end
   end
 
   defmodule BoardWithFourSpaces do
-    defstruct board: [nil, nil, nil, nil],
+    defstruct board_state: [nil, nil, nil, nil],
               boards: [
                 ["X", nil, nil, nil],
                 ["X", "O", nil, nil],
@@ -50,13 +54,14 @@ defmodule TicTacToeTest do
             _position,
             _token
           ) do
-        %{board_with_four_spaces | board: first, boards: last}
-      end
-    end
+        board_state = first
 
-    defimpl BoardOutcome do
-      def game_over?(%{board: board} = board_with_four_spaces) do
-        %{board_with_four_spaces | game_over: !Enum.member?(board, nil)}
+        %{
+          board_with_four_spaces
+          | board_state: board_state,
+            boards: last,
+            game_over: !Enum.member?(board_state, nil)
+        }
       end
     end
   end
@@ -69,8 +74,8 @@ defmodule TicTacToeTest do
              display: %DisplayWithIO{},
              presenter: HyphenPresenter,
              players: [
-               %PlayerWithOne{token: "X", moves: [1, 3]},
-               %PlayerWithOne{token: "O", moves: [2, 4]}
+               %PlayerWithMoves{token: "X", moves: [1, 3]},
+               %PlayerWithMoves{token: "O", moves: [2, 4]}
              ]
            }).display.outputs == expected_grid
   end

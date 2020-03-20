@@ -2,7 +2,6 @@ defmodule TicTacToe do
   alias TicTacToe.Display
   alias TicTacToe.Player
   alias TicTacToe.BoardUpdate
-  alias TicTacToe.BoardOutcome
 
   def run(%{board: %{game_over: game_over}} = state) when game_over do
     show_board(state)
@@ -30,7 +29,6 @@ defmodule TicTacToe do
 
     board =
       BoardUpdate.place_token(board, first_player.selection, first_player.token)
-      |> BoardOutcome.game_over?()
 
     %{state | board: board, players: [second_player, first_player]}
   end

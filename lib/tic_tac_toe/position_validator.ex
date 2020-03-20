@@ -1,14 +1,14 @@
 defmodule TicTacToe.PositionValidator do
-  alias TicTacToe.BoardState
+  alias TicTacToe.BoardInspect
 
   def error(position, board) do
-    board = BoardState.available_positions(board)
+    board = BoardInspect.get(board, position)
 
     cond do
       Enum.member?(1..9, position) == false ->
         "Invalid entry."
 
-      board.available_positions |> Enum.member?(position) == false ->
+      board.position_value ->
         "Selection taken."
 
       true ->

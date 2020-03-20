@@ -1,14 +1,15 @@
 defmodule TicTacToe.PositionValidatorTest do
   use ExUnit.Case
   alias TicTacToe.PositionValidator
-  alias TicTacToe.BoardState
+  alias TicTacToe.BoardInspect
 
   defmodule BoardWithTwoAvailable do
-    defstruct [:available_positions]
+    defstruct [:position_value]
 
-    defimpl BoardState do
-      def available_positions(board) do
-        %{board | available_positions: [2]}
+    defimpl BoardInspect do
+      def get(board, position) do
+        position_value = if position == 2, do: nil, else: "X"
+        %{board | position_value: position_value}
       end
     end
   end
