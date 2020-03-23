@@ -10,10 +10,16 @@ defmodule TicTacToe.PositionValidatorTest do
       def get(_board, position) do
         if position != 2, do: "X"
       end
+
+      def size(_board) do
+        9
+      end
+
+      def outcome(_), do: nil
     end
   end
 
-  test "returns an error if the position is not between 1 and 9" do
+  test "returns an error if the position is not between 1 and the board's size" do
     assert PositionValidator.error(0, %BoardWithTwoAvailable{}) ==
              "Invalid entry."
   end

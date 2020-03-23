@@ -3,7 +3,7 @@ defmodule TicTacToe.PositionValidator do
 
   def error(position, board) do
     cond do
-      Enum.member?(1..9, position) == false ->
+      Enum.member?(1..BoardInspect.size(board), position) == false ->
         "Invalid entry."
 
       BoardInspect.get(board, position) ->

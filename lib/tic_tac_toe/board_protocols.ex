@@ -4,4 +4,6 @@ end
 
 defprotocol TicTacToe.BoardInspect do
   def get(board, position)
+  def size(board)
+  def outcome(board)
 end
