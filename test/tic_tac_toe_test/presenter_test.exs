@@ -1,20 +1,14 @@
 defmodule TicTacToe.PresenterTest do
   use ExUnit.Case
   alias TicTacToe.Presenter
-  alias TicTacToe.Board
+  alias TicTacToe.BoardInspect
 
   defmodule BoardWithThreeX do
     defstruct []
 
-    defimpl Board do
+    defimpl BoardInspect do
       def get(_board, position) do
         if Enum.member?([1, 2, 3], position), do: "X"
-      end
-
-      def place_token(_board, _position, _token) do
-      end
-
-      def available_positions(_board) do
       end
     end
   end
