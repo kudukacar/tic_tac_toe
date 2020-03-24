@@ -1,5 +1,5 @@
 defprotocol TicTacToe.BoardUpdate do
-  def place_token(board, player_properties)
+  def place_token(board, move)
 end
 
 defprotocol TicTacToe.BoardInspect do

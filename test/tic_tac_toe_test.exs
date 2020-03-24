@@ -56,7 +56,7 @@ defmodule TicTacToeTest do
     defimpl BoardUpdate do
       def place_token(
             %{boards: [first | last]} = board_with_four_spaces,
-            _player_properties
+            _move
           ) do
         board_state = first
 

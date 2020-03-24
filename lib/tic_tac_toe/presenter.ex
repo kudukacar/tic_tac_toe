@@ -5,28 +5,33 @@ defmodule TicTacToe.Presenter do
     number_of_positions = BoardInspect.size(board)
     row_length = BoardInspect.row_length(board)
 
-    displayed_board =
-      format_cells(row_length, number_of_positions, board) |> Enum.join()
-
-    "\n#{displayed_board <> display_outcome(board)}"
+    "\n#{
+      format_cells(row_length, number_of_positions, board) <>
+        display_outcome(board)
+    }"
   end
 
   defp format_cells(row_length, number_of_positions, board) do
     Enum.to_list(1..number_of_positions)
-    |> Enum.map(fn x ->
-      value = BoardInspect.get(board, x) || " "
-
-      cond do
-        x == number_of_positions ->
-          " #{value} \n\n"
-
-        rem(x, row_length) == 0 && x != 1 ->
-          " #{value} \n#{row_lines(row_length)}"
-
-        true ->
-          " #{value} |"
-      end
+    |> Enum.map(fn position ->
+      format_cell(position, row_length, number_of_positions, board)
     end)
+    |> Enum.join()
+  end
+
+  defp format_cell(position, row_length, number_of_positions, board) do
+    value = BoardInspect.get(board, position) || " "
+
+    cond do
+      position == number_of_positions ->
+        " #{value} \n\n"
+
+      rem(position, row_length) == 0 && position != 1 ->
+        " #{value} \n#{row_lines(row_length)}"
+
+      true ->
+        " #{value} |"
+    end
   end
 
   defp display_outcome(board) do
