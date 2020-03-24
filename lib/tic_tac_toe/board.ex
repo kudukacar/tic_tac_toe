@@ -29,9 +29,9 @@ defmodule TicTacToe.Board do
       {status, winner}
     end
 
-    defp rows(%Board{board_state: board_state} = board) do
-      {_, row_length} = size(board)
-      1..length(board_state) |> Enum.to_list() |> Enum.chunk_every(row_length)
+    defp rows(%Board{} = board) do
+      {number_of_positions, row_length} = size(board)
+      1..number_of_positions |> Enum.to_list() |> Enum.chunk_every(row_length)
     end
 
     defp columns(rows) do
