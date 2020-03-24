@@ -12,7 +12,7 @@ defmodule TicTacToe.PresenterTest do
       end
 
       def size(_board) do
-        9
+        {9, 3}
       end
 
       def outcome(board) do

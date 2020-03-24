@@ -36,6 +36,10 @@ defmodule TicTacToeTest do
           ) do
         %{player | moves: moves, selection: selection}
       end
+
+      def get(%PlayerWithMoves{selection: selection, token: token}) do
+        {selection, token}
+      end
     end
   end
 
@@ -51,18 +55,16 @@ defmodule TicTacToeTest do
 
     defimpl BoardUpdate do
       def place_token(
-            %{boards: [first | last], status: status} = board_with_four_spaces,
+            %{boards: [first | last]} = board_with_four_spaces,
             _position,
             _token
           ) do
         board_state = first
-        new_status = if !Enum.member?(board_state, nil), do: :win
 
         %{
           board_with_four_spaces
           | board_state: board_state,
-            boards: last,
-            status: new_status || status
+            boards: last
         }
       end
     end

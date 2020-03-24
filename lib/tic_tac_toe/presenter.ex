@@ -2,11 +2,10 @@ defmodule TicTacToe.Presenter do
   alias TicTacToe.BoardInspect
 
   def present(board) do
-    size = BoardInspect.size(board)
-    row_length = size |> :math.sqrt() |> trunc()
+    {number_of_positions, row_length} = BoardInspect.size(board)
 
     displayed_board =
-      Enum.to_list(1..size)
+      Enum.to_list(1..number_of_positions)
       |> Enum.map(fn x ->
         value = BoardInspect.get(board, x) || " "
 
@@ -14,11 +13,11 @@ defmodule TicTacToe.Presenter do
           x == 1 ->
             "\n #{value} |"
 
-          rem(x, row_length) == 0 && x != size ->
-            " #{value} \n#{row_lines(row_length)}"
-
-          x == size ->
+          x == number_of_positions ->
             " #{value} \n\n"
+
+          rem(x, row_length) == 0 ->
+            " #{value} \n#{row_lines(row_length)}"
 
           true ->
             " #{value} |"
