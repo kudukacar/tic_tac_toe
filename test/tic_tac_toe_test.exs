@@ -3,6 +3,7 @@ defmodule TicTacToeTest do
   alias TicTacToe.Player
   alias TicTacToe.Display
   alias TicTacToe.BoardUpdate
+  alias TicTacToe.BoardInspect
 
   defmodule HyphenPresenter do
     def present(%{board_state: board_state}) do
@@ -35,6 +36,10 @@ defmodule TicTacToeTest do
           ) do
         %{player | moves: moves, selection: selection}
       end
+
+      def get(%PlayerWithMoves{selection: selection, token: token}) do
+        {selection, token}
+      end
     end
   end
 
@@ -46,27 +51,39 @@ defmodule TicTacToeTest do
                 ["X", "O", "X", nil],
                 ["X", "O", "X", "O"]
               ],
-              game_over: false
+              status: :in_progress
 
     defimpl BoardUpdate do
       def place_token(
             %{boards: [first | last]} = board_with_four_spaces,
-            _position,
-            _token
+            _move
           ) do
         board_state = first
 
         %{
           board_with_four_spaces
           | board_state: board_state,
-            boards: last,
-            game_over: !Enum.member?(board_state, nil)
+            boards: last
         }
+      end
+    end
+
+    defimpl BoardInspect do
+      def get(_, _), do: nil
+      def size(_), do: nil
+      def row_length(_), do: nil
+
+      def outcome(%{board_state: board_state}) do
+        if !Enum.member?(board_state, nil) do
+          {:win, "X"}
+        else
+          {:in_progress, nil}
+        end
       end
     end
   end
 
-  test "plays the game until its over" do
+  test "plays the game until an outcome" do
     expected_grid = ["----", "X---", "XO--", "XOX-", "XOXO"]
 
     assert TicTacToe.run(%{

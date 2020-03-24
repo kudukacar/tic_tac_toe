@@ -34,6 +34,10 @@ defmodule TicTacToe.HumanPlayer do
       end
     end
 
+    def get(%HumanPlayer{selection: selection, token: token}) do
+      {selection, token}
+    end
+
     defp message(token) do
       "Go #{token}. Please select your move[1, 9]."
     end

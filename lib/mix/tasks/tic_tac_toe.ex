@@ -7,7 +7,7 @@ defmodule Mix.Tasks.TicTacToe do
 
   def run(_) do
     TicTacToe.run(%{
-      board: %Board{board_state: List.duplicate(nil, 9)},
+      board: Board.new(9),
       display: %Console{},
       presenter: Presenter,
       players: [%HumanPlayer{token: "X"}, %HumanPlayer{token: "O"}]

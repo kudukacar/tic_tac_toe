@@ -58,4 +58,8 @@ defmodule TicTacToe.HumanPlayerTest do
              board
            ).selection == 1
   end
+
+  test "gets the player's selection and token" do
+    assert Player.get(%HumanPlayer{selection: 1, token: "X"}) == {1, "X"}
+  end
 end

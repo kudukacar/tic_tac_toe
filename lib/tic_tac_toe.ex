@@ -2,16 +2,22 @@ defmodule TicTacToe do
   alias TicTacToe.Display
   alias TicTacToe.Player
   alias TicTacToe.BoardUpdate
-
-  def run(%{board: %{game_over: game_over}} = state) when game_over do
-    show_board(state)
-  end
+  alias TicTacToe.BoardInspect
 
   def run(state) do
-    state
-    |> show_board()
-    |> play_turn()
-    |> run()
+    if game_over?(state) do
+      show_board(state)
+    else
+      state
+      |> show_board()
+      |> play_turn()
+      |> run()
+    end
+  end
+
+  defp game_over?(%{board: board}) do
+    {status, _winner} = BoardInspect.outcome(board)
+    status != :in_progress
   end
 
   defp show_board(
@@ -26,9 +32,9 @@ defmodule TicTacToe do
          %{players: [first_player, second_player], board: board} = state
        ) do
     first_player = Player.selection(first_player, board)
+    move = Player.get(first_player)
 
-    board =
-      BoardUpdate.place_token(board, first_player.selection, first_player.token)
+    board = BoardUpdate.place_token(board, move)
 
     %{state | board: board, players: [second_player, first_player]}
   end
