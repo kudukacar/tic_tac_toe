@@ -5,15 +5,21 @@ defmodule TicTacToe.Board do
 
   defstruct [:board_state]
 
+  def new(size) do
+    %Board{board_state: List.duplicate(nil, size)}
+  end
+
   defimpl BoardInspect do
     def get(%Board{board_state: board_state}, position) do
       Enum.at(board_state, position - 1)
     end
 
     def size(%Board{board_state: board_state}) do
-      number_of_positions = length(board_state)
-      row_length = number_of_positions |> :math.sqrt() |> trunc()
-      {number_of_positions, row_length}
+      length(board_state)
+    end
+
+    def row_length(%Board{} = board) do
+      size(board) |> :math.sqrt() |> trunc()
     end
 
     def outcome(%Board{board_state: board_state} = board) do
@@ -30,7 +36,8 @@ defmodule TicTacToe.Board do
     end
 
     defp rows(%Board{} = board) do
-      {number_of_positions, row_length} = size(board)
+      number_of_positions = size(board)
+      row_length = row_length(board)
       1..number_of_positions |> Enum.to_list() |> Enum.chunk_every(row_length)
     end
 
@@ -81,8 +88,7 @@ defmodule TicTacToe.Board do
   defimpl BoardUpdate do
     def place_token(
           %Board{board_state: board_state} = board,
-          position,
-          token
+          {position, token}
         ) do
       board_state = List.replace_at(board_state, position - 1, token)
 

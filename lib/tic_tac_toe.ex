@@ -32,9 +32,9 @@ defmodule TicTacToe do
          %{players: [first_player, second_player], board: board} = state
        ) do
     first_player = Player.selection(first_player, board)
-    {selection, token} = Player.get(first_player)
+    player_properties = Player.get(first_player)
 
-    board = BoardUpdate.place_token(board, selection, token)
+    board = BoardUpdate.place_token(board, player_properties)
 
     %{state | board: board, players: [second_player, first_player]}
   end

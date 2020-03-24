@@ -12,9 +12,10 @@ defmodule TicTacToe.PositionValidatorTest do
       end
 
       def size(_board) do
-        {9, 3}
+        9
       end
 
+      def row_length(_), do: nil
       def outcome(_), do: nil
     end
   end

@@ -2,30 +2,31 @@ defmodule TicTacToe.Presenter do
   alias TicTacToe.BoardInspect
 
   def present(board) do
-    {number_of_positions, row_length} = BoardInspect.size(board)
+    number_of_positions = BoardInspect.size(board)
+    row_length = BoardInspect.row_length(board)
 
     displayed_board =
-      Enum.to_list(1..number_of_positions)
-      |> Enum.map(fn x ->
-        value = BoardInspect.get(board, x) || " "
+      format_cells(row_length, number_of_positions, board) |> Enum.join()
 
-        cond do
-          x == 1 ->
-            "\n #{value} |"
+    "\n#{displayed_board <> display_outcome(board)}"
+  end
 
-          x == number_of_positions ->
-            " #{value} \n\n"
+  defp format_cells(row_length, number_of_positions, board) do
+    Enum.to_list(1..number_of_positions)
+    |> Enum.map(fn x ->
+      value = BoardInspect.get(board, x) || " "
 
-          rem(x, row_length) == 0 ->
-            " #{value} \n#{row_lines(row_length)}"
+      cond do
+        x == number_of_positions ->
+          " #{value} \n\n"
 
-          true ->
-            " #{value} |"
-        end
-      end)
-      |> Enum.join()
+        rem(x, row_length) == 0 && x != 1 ->
+          " #{value} \n#{row_lines(row_length)}"
 
-    displayed_board <> display_outcome(board)
+        true ->
+          " #{value} |"
+      end
+    end)
   end
 
   defp display_outcome(board) do
