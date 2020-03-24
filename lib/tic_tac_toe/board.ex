@@ -53,13 +53,18 @@ defmodule TicTacToe.Board do
 
       (rows ++
          columns(rows) ++ [left_diagonal(rows)] ++ [right_diagonal(rows)])
+      |> winning_line(board)
+      |> winning_token(board_state)
+    end
+
+    defp winning_line(lines, board) do
+      lines
       |> Enum.filter(fn [first_position | remaining_positions] ->
         Enum.all?(remaining_positions, fn x ->
           get(board, x) == get(board, first_position)
         end)
       end)
       |> List.flatten()
-      |> winning_token(board_state)
     end
 
     defp winning_token(winning_positions, board_state) do
