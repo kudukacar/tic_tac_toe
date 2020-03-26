@@ -33,6 +33,7 @@ defmodule TicTacToe.HumanPlayerTest do
 
   test "with a valid entry returns the player's selection" do
     board = []
+    other_player = %{}
 
     assert Player.selection(
              %HumanPlayer{
@@ -41,12 +42,14 @@ defmodule TicTacToe.HumanPlayerTest do
                parser: ParserWithOne,
                validator: ValidatorWithOneValid
              },
-             board
+             board,
+             other_player
            ).selection == 1
   end
 
   test "with an invalid entry prompts the user until a valid entry" do
     board = []
+    other_player = %{}
 
     assert Player.selection(
              %HumanPlayer{
@@ -55,7 +58,8 @@ defmodule TicTacToe.HumanPlayerTest do
                parser: ParserWithOne,
                validator: ValidatorWithOneValid
              },
-             board
+             board,
+             other_player
            ).selection == 1
   end
 

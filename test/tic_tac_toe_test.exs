@@ -32,7 +32,8 @@ defmodule TicTacToeTest do
     defimpl Player do
       def selection(
             %PlayerWithMoves{moves: [selection | moves]} = player,
-            _board
+            _board,
+            _other_player
           ) do
         %{player | moves: moves, selection: selection}
       end
@@ -50,8 +51,7 @@ defmodule TicTacToeTest do
                 ["X", "O", nil, nil],
                 ["X", "O", "X", nil],
                 ["X", "O", "X", "O"]
-              ],
-              status: :in_progress
+              ]
 
     defimpl BoardUpdate do
       def place_token(
