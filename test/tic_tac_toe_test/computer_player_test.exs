@@ -23,7 +23,7 @@ defmodule TicTacToe.ComputerPlayerTest do
       def row_length(_), do: nil
 
       def size(_board) do
-        4
+        5
       end
 
       def get(%SmallBoard{board_state: board_state}, position) do
@@ -32,9 +32,10 @@ defmodule TicTacToe.ComputerPlayerTest do
 
       def outcome(%SmallBoard{board_state: board_state}) do
         case board_state do
-          [winner, winner, _, _] -> {:win, winner}
-          ["O", "X", "X", "O"] -> {:draw, nil}
-          ["X", "O", "O", "X"] -> {:draw, nil}
+          [winner, winner, winner, _, _] -> {:win, winner}
+          [_, _, winner, winner, winner] -> {:win, winner}
+          ["O", "O", "X", "X", "O"] -> {:draw, nil}
+          ["X", "O", "X", "X", "O"] -> {:draw, nil}
           _ -> {:in_progress, nil}
         end
       end
@@ -44,25 +45,25 @@ defmodule TicTacToe.ComputerPlayerTest do
   test "selects an available position" do
     assert Player.selection(
              %ComputerPlayer{token: "O"},
-             %SmallBoard{board_state: ["O", "X", "X", nil]},
+             %SmallBoard{board_state: ["O", "O", "X", "X", nil]},
              %ComputerPlayer{token: "X"}
-           ).selection == 4
+           ).selection == 5
   end
 
   test "makes a winning move when available" do
     assert Player.selection(
              %ComputerPlayer{token: "O"},
-             %SmallBoard{board_state: ["O", nil, "X", nil]},
+             %SmallBoard{board_state: ["O", "O", nil, "X", nil]},
              %ComputerPlayer{token: "X"}
-           ).selection == 2
+           ).selection == 3
   end
 
   test "takes a draw over a loss" do
     assert Player.selection(
              %ComputerPlayer{token: "O"},
-             %SmallBoard{board_state: ["X", nil, "O", nil]},
+             %SmallBoard{board_state: [nil, "O", "X", "X", nil]},
              %ComputerPlayer{token: "X"}
-           ).selection == 2
+           ).selection == 5
   end
 
   test "gets the player's selection and token" do
