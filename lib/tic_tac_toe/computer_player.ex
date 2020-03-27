@@ -27,8 +27,7 @@ defmodule TicTacToe.ComputerPlayer do
       {selection, token}
     end
 
-    defp best_move(_, _, available_positions, moves)
-         when available_positions == [] do
+    defp best_move(_, _, [], moves) do
       moves |> Enum.max_by(fn {_, score} -> score end)
     end
 
