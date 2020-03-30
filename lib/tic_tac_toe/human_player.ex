@@ -6,11 +6,13 @@ defmodule TicTacToe.HumanPlayer do
   alias TicTacToe.HumanPlayer
   alias TicTacToe.Parser
 
-  defstruct token: [:token],
-            selection: [:selection],
-            display: %Console{},
-            parser: Parser,
-            validator: PositionValidator
+  defstruct [
+    :token,
+    :selection,
+    display: %Console{},
+    parser: Parser,
+    validator: PositionValidator
+  ]
 
   defimpl Player do
     def selection(
@@ -20,7 +22,8 @@ defmodule TicTacToe.HumanPlayer do
             parser: parser,
             validator: validator
           } = player,
-          board
+          board,
+          other_player
         ) do
       display = Display.input(display, message(token))
       input = parser.to_integer(display.input)
@@ -30,7 +33,7 @@ defmodule TicTacToe.HumanPlayer do
       else
         Display.output(display, error)
 
-        selection(%{player | display: display}, board)
+        selection(%{player | display: display}, board, other_player)
       end
     end
 
